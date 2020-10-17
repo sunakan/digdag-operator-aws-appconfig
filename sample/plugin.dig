@@ -4,8 +4,22 @@ _export:
       - file://${repos}
       # - https://jitpack.io
     dependencies:
-      - io.digdag.plugin:digdag-operator-appconfig:1.0.0
+      - io.digdag.plugin:digdag-operator-aws-appconfig:1.0.0
       # - com.github.emanon-was:digdag-operator-appconfig:1.0.0
 
 +step1:
-  appconfig>: test
+  aws.appconfig.get_configuration>:
+  # authenticate:
+  #   access_key_id: ""
+  #   secret_access_key: ""
+  resource:
+    application: "digdag"
+    environment: "main"
+    configuration: "test"
+    client_id: "abcdefghijklmnopqrstuvwxyz"
+  export:
+    export_key1: "appconfig.key1"
+    export_key2: "appconfig.key2"
+  store:
+    store_key1: "appconfig.key1"
+    store_key2: "appconfig.key2"

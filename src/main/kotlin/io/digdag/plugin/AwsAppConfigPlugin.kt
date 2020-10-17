@@ -12,31 +12,31 @@ import io.digdag.spi.TaskResult
 import io.digdag.util.BaseOperator
 import java.lang.Class
 
-class AppConfigPlugin : Plugin {
+class AwsAppConfigPlugin : Plugin {
     // Definition: https://github.com/treasure-data/digdag/blob/master/digdag-spi/src/main/java/io/digdag/spi/Plugin.java
     // Example: https://github.com/myui/digdag-plugin-example/blob/master/src/main/java/io/digdag/plugin/example/ExamplePlugin.java
     override fun <T> getServiceProvider(type: Class<T>): Class<out T> {
-        return AppConfigOperatorProvider::class.java.asSubclass(type)
+        return AwsAppConfigOperatorProvider::class.java.asSubclass(type)
     }
 }
 
-class AppConfigOperatorProvider : OperatorProvider {
+class AwsAppConfigOperatorProvider : OperatorProvider {
     // Definition: https://github.com/treasure-data/digdag/blob/master/digdag-spi/src/main/java/io/digdag/spi/OperatorProvider.java
     // Example: https://github.com/myui/digdag-plugin-example/blob/master/src/main/java/io/digdag/plugin/example/ExamplePlugin.java
 
     // @Inject
     // protected TemplateEngine templateEngine;
-    override fun get(): List<OperatorFactory> = listOf(AppConfigOperatorFactory("appconfig"))
+    override fun get(): List<OperatorFactory> = listOf(AwsAppConfigOperatorFactory("aws.appconfig.get_configuration"))
 }
 
-class AppConfigOperatorFactory(val operatorName: String) : OperatorFactory {
+class AwsAppConfigOperatorFactory(val operatorName: String) : OperatorFactory {
     // Definition: https://github.com/treasure-data/digdag/blob/master/digdag-spi/src/main/java/io/digdag/spi/OperatorFactory.java
     // Example: https://github.com/myui/digdag-plugin-example/blob/master/src/main/java/io/digdag/plugin/example/ExampleOperatorFactory.java
     override fun getType(): String = operatorName
-    override fun newOperator(ctx: OperatorContext): Operator = AppConfigOperator(ctx)
+    override fun newOperator(ctx: OperatorContext): Operator = AwsAppConfigOperator(ctx)
 }
 
-class AppConfigOperator(ctx: OperatorContext) : BaseOperator(ctx) {
+class AwsAppConfigOperator(ctx: OperatorContext) : BaseOperator(ctx) {
     // Definition: https://github.com/treasure-data/digdag/blob/master/digdag-plugin-utils/src/main/java/io/digdag/util/BaseOperator.java
     // Example: https://github.com/myui/digdag-plugin-example/blob/master/src/main/java/io/digdag/plugin/example/ExampleOperatorFactory.java
     override fun runTask(): TaskResult {

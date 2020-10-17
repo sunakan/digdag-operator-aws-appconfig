@@ -15,3 +15,9 @@ digdag selfupdate
 
 digdag run --project sample plugin.dig -p repos=`pwd`/build/repo -a
 ```
+
+For develop
+
+```sh
+./run_sample.sh
+```
