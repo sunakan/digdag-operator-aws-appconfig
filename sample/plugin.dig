@@ -1,0 +1,11 @@
+_export:
+  plugin:
+    repositories:
+      - file://${repos}
+      # - https://jitpack.io
+    dependencies:
+      - io.digdag.plugin:digdag-operator-appconfig:1.0.0
+      # - com.github.emanon-was:digdag-operator-appconfig:1.0.0
+
++step1:
+  appconfig>: test

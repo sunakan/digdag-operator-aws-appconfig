@@ -4,19 +4,39 @@
  * This generated file contains a sample Kotlin library project to get you started.
  */
 
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
+group = "io.digdag.plugin"
+version = "1.0.0"
+
 plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
+    id("com.jfrog.bintray") version "1.8.5"
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
+    `maven`
+    `maven-publish`
 }
 
 repositories {
     // Use jcenter for resolving dependencies.
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
+    maven(url = "https://dl.bintray.com/digdag/maven")
 }
+
+// ktlint
+buildscript {
+    repositories {
+        maven("https://plugins.gradle.org/m2/")
+    }
+    dependencies {
+        classpath("org.jlleitschuh.gradle:ktlint-gradle:9.2.1")
+    }
+}
+apply(plugin = "org.jlleitschuh.gradle.ktlint")
 
 dependencies {
     // Align versions of all Kotlin components
@@ -30,4 +50,30 @@ dependencies {
 
     // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
+
+    val digdagVersion = "0.9.42"
+    compileOnly("io.digdag:digdag-spi:$digdagVersion")
+    compileOnly("io.digdag:digdag-plugin-utils:$digdagVersion")
+}
+
+// https://docs.gradle.org/current/userguide/publishing_maven.html#sec:modifying_the_generated_pom
+publishing {
+    publications {
+        create<MavenPublication>("mavenJava") {
+            from(components.getByName("java"))
+        }
+    }
+    repositories {
+        maven {
+            setUrl("$buildDir/repo")
+        }
+    }
+}
+
+tasks.withType<KotlinCompile> {
+    kotlinOptions {
+        freeCompilerArgs = listOf("-Xjsr305=strict")
+        jvmTarget = "1.8"
+        allWarningsAsErrors = true
+    }
 }
