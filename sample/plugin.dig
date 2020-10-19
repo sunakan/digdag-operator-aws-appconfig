@@ -9,14 +9,15 @@ _export:
 
 +step1:
   aws.appconfig.get_configuration>:
-  # authenticate:
-  #   access_key_id: ""
-  #   secret_access_key: ""
-  resource:
-    application: "digdag"
-    environment: "main"
-    configuration: "test"
-    client_id: "abcdefghijklmnopqrstuvwxyz"
+  credentials: # (optional)
+    access_key_id: "test1"
+    secret_access_key: "test2"
+  resource: # (required)
+    application: "digdag" # (required)
+    environment: "main" # (required)
+    configuration: "test" # (required)
+    client_id: "abcdefghijklmnopqrstuvwxyz" # (required)
+    client_configuration_version: "1" # (optional)
   export:
     export_key1: "appconfig.key1"
     export_key2: "appconfig.key2"

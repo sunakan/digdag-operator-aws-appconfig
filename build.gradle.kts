@@ -54,6 +54,10 @@ dependencies {
     val digdagVersion = "0.9.42"
     compileOnly("io.digdag:digdag-spi:$digdagVersion")
     compileOnly("io.digdag:digdag-plugin-utils:$digdagVersion")
+
+    val awsjavasdkVersion = "2.15.9"
+    implementation(platform("software.amazon.awssdk:bom:$awsjavasdkVersion"))
+    implementation("software.amazon.awssdk:appconfig")
 }
 
 // https://docs.gradle.org/current/userguide/publishing_maven.html#sec:modifying_the_generated_pom
