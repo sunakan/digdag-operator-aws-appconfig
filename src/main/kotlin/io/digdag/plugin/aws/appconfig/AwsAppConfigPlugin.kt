@@ -50,8 +50,6 @@ class AwsAppConfigOperator(ctx: OperatorContext) : BaseOperator(ctx) {
         // println("$resource")
         val a = AwsAppConfigService
         a.test("DITest1")
-        val b = AwsAppConfigService.Mock
-        b.test("DITest2")
         return TaskResult.empty(request)
     }
 }

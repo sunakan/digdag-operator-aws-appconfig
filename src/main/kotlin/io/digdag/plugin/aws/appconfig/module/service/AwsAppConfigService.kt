@@ -1,20 +1,17 @@
 package io.digdag.plugin.aws.appconfig.module.service
 
-import io.digdag.plugin.aws.appconfig.module.repository.aws.UseAwsAppConfigRepository
-import io.digdag.plugin.aws.appconfig.module.repository.aws.UseAwsAppConfigRepositoryCompanion
-import io.digdag.plugin.aws.appconfig.module.repository.aws.UseAwsAppConfigRepositoryMock
+import io.digdag.plugin.aws.appconfig.module.component.LoggerComponent
+import io.digdag.plugin.aws.appconfig.module.repository.aws.AwsAppConfigRepository
 
-interface AwsAppConfigService : UseAwsAppConfigRepository {
-
-    fun test(message: String) {
-        awsAppConfigRepository.test(message)
-    }
+interface AwsAppConfigService : LoggerComponent.Context, AwsAppConfigRepository.Context {
 
     companion object :
         AwsAppConfigService,
-        UseAwsAppConfigRepositoryCompanion
+        LoggerComponent.Provider,
+        AwsAppConfigRepository.Provider
 
-    object Mock :
-        AwsAppConfigService,
-        UseAwsAppConfigRepositoryMock
+    fun test(message: String) {
+        logger.warn("test")
+        awsAppConfigRepository.test(message)
+    }
 }

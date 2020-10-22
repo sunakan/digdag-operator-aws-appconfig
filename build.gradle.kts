@@ -13,6 +13,7 @@ plugins {
     // Apply the Kotlin JVM plugin to add support for Kotlin.
     id("org.jetbrains.kotlin.jvm") version "1.3.72"
     id("com.jfrog.bintray") version "1.8.5"
+    kotlin("kapt") version "1.4.10"
 
     // Apply the java-library plugin for API and implementation separation.
     `java-library`
@@ -25,6 +26,7 @@ repositories {
     // You can declare any Maven/Ivy/file repository here.
     jcenter()
     maven(url = "https://dl.bintray.com/digdag/maven")
+    maven(url = "https://dl.bintray.com/arrow-kt/arrow-kt/")
 }
 
 // ktlint
@@ -51,13 +53,26 @@ dependencies {
     // Use the Kotlin JUnit integration.
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit")
 
+    // Digdag
     val digdagVersion = "0.9.42"
     compileOnly("io.digdag:digdag-spi:$digdagVersion")
     compileOnly("io.digdag:digdag-plugin-utils:$digdagVersion")
 
+    // AwsSDK
     val awsjavasdkVersion = "2.15.9"
     implementation(platform("software.amazon.awssdk:bom:$awsjavasdkVersion"))
     implementation("software.amazon.awssdk:appconfig")
+
+    // Logger(SLF4J)
+    val slf4jVersion = "1.7.30"
+    implementation("org.slf4j:slf4j-api:$slf4jVersion")
+    implementation("org.slf4j:slf4j-simple:$slf4jVersion")
+
+    // arrow-kt
+    val arrowVersion = "0.11.0"
+    implementation("io.arrow-kt:arrow-core:$arrowVersion")
+    implementation("io.arrow-kt:arrow-syntax:$arrowVersion")
+    kapt("io.arrow-kt:arrow-meta:$arrowVersion")
 }
 
 // https://docs.gradle.org/current/userguide/publishing_maven.html#sec:modifying_the_generated_pom
